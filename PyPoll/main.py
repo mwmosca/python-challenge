@@ -1,8 +1,8 @@
 import csv
 import os
 
-inputFile = os.path.join(os.getcwd(), 'Resources', 'election_data.csv')
-outputFile = os.path.join(os.getcwd(), 'analysis', 'results.txt')
+inputFile = os.path.join('Resources', 'election_data.csv')
+outputFile = os.path.join('analysis', 'results.txt')
 voteCounts = {}
 totalVotes = 0
 

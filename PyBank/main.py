@@ -1,8 +1,8 @@
 import csv
 import os
 
-inputFile = os.path.join(os.getcwd(), 'Resources', 'budget_data.csv')
-outputFile = os.path.join(os.getcwd(), 'analysis', 'results.txt')
+inputFile = os.path.join('Resources', 'budget_data.csv')
+outputFile = os.path.join('analysis', 'results.txt')
 
 # Open the data file
 input = csv.DictReader(open(inputFile, 'r'))
