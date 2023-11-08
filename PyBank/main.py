@@ -1,29 +1,31 @@
 import csv
 import os
 
-inputFile = os.path.join('Resources', 'budget_data.csv')
-outputFile = os.path.join('analysis', 'results.txt')
+inputFilePath = os.path.join('Resources', 'budget_data.csv')
+outputFilePath = os.path.join('analysis', 'results.txt')
 
 # Open the data file
-input = csv.DictReader(open(inputFile, 'r'))
+with open(inputFilePath, 'r') as inputFile:
+    inputReader = csv.DictReader(inputFile)
     
-# Set up initial conditions using the first data entry
-row = next(input)
-profit = int(row['Profit/Losses'])
-totalProfit = profit
-changeInProfit = {}
-previousProfit = profit
-
-# Process the remaining data
-for row in input:
+    # Set up initial conditions using the first data entry
+    row = next(inputReader)
     profit = int(row['Profit/Losses'])
-    totalProfit += profit
-    changeInProfit[row['Date']] = profit - previousProfit
+    totalProfit = profit
+    changeInProfit = {}
     previousProfit = profit
+
+    # Process the remaining data
+    for row in inputReader:
+        profit = int(row['Profit/Losses'])
+        totalProfit += profit
+        changeInProfit[row['Date']] = profit - previousProfit
+        previousProfit = profit
+
+totalMonths = len(changeInProfit) + 1
 
 # Sort the changes in profit by value
 sortedChangeInProfit = sorted(changeInProfit.items(), key = lambda item: item[1])
-totalMonths = len(sortedChangeInProfit) + 1
 
 # Format output ***************************************************************************************
 output = f"""Financial Analysis
@@ -43,4 +45,4 @@ Greatest Decrease in Profits: {sortedChangeInProfit[0][0]} (${sortedChangeInProf
 
 # Write output to the terminal and a .txt file
 print(output)
-open(outputFile, 'w').write(output)
+open(outputFilePath, 'w').write(output)

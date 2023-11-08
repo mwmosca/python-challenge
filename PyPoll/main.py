@@ -1,20 +1,20 @@
 import csv
 import os
 
-inputFile = os.path.join('Resources', 'election_data.csv')
-outputFile = os.path.join('analysis', 'results.txt')
+inputFilePath = os.path.join('Resources', 'election_data.csv')
+outputFilePath = os.path.join('analysis', 'results.txt')
 voteCounts = {}
 totalVotes = 0
 
-# Open the data file
-input = csv.DictReader(open(inputFile, 'r'))
+with open(inputFilePath, 'r') as inputFile:
+    inputReader = csv.DictReader(inputFile)
 
-# Sum the votes
-for row in input:
-    try:
-        voteCounts[row['Candidate']] += 1
-    except KeyError:
-        voteCounts[row['Candidate']] = 1
+    # Count the votes
+    for row in inputReader:
+        try:
+            voteCounts[row['Candidate']] += 1
+        except KeyError:
+            voteCounts[row['Candidate']] = 1
 
 totalVotes = sum(voteCounts.values())
 
@@ -41,4 +41,4 @@ Winner: {max(voteCounts, key = voteCounts.get)}
     
 # Write output to the terminal and a .txt file
 print(output)
-open(outputFile, 'w').write(output)
+open(outputFilePath, 'w').write(output)
